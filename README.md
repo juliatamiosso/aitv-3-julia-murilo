@@ -1,4 +1,4 @@
-# aitv-3-julia-murilo
+# ativ-3-julia-murilo
 Desenvolvimento de aplicações para acesso a APIs
 Alunos: Júlia Cabral Tamiosso e Murilo Scalcon Alves dos Santos
 
