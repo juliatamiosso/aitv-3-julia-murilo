@@ -27,16 +27,83 @@
             </div>
         </nav>
         <br>
-
         <div class="row align-items-center">
             <div class="col-10">
-                <h1>Encontrar cidade por nome e estado</h1>
+                <h1>Encontrar cidade por cidade e estado</h1>
             </div>
         </div>
         <br>
 
+        <div class="main">
+            <form class="container-fluid d-flex justify-content-center">
+                <input class="form-control me-2" type="search" placeholder="Buscar cidade" aria-label="Search" id="txtbuscacidade">
+                <br>
+                <br>
+                <input class="form-control me-2" type="search" placeholder="Buscar estado" aria-label="Search" id="txtbuscaestado">
+                <br>
+                <br>
+                <a class="btn btn-outline-sucess" id="btnbusca">Consultar</a>
+            </form>
+        </div>
+        <br>
+        <section class="container-fluid d-flex justify-content-center">
+            <div class="card text-bg-light mb-3" style="max-width: 18rem;">
+                <div class="card-header">Dados</div>
+                <div class="card-body">
+                <p class="card-text" id="city">...</p>
+                <p class="card-text" id="date">...</p>
+                <p class="card-text" id="time">...</p>
+                <p class="card-text" id="currently">...</p>
+                <p class="card-text" id="description">...</p>
+
+            </div>
+        </div>
         
+        </section>
+
+      
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+<script>
+        const txtbuscacidade = document.getElementById("txtbuscacidade");
+        const btnbusca = document.getElementById("btnbusca");
+        const city= document.getElementById("city");
+        const date= document.getElementById("date");
+        const time= document.getElementById("time");
+        const currently= document.getElementById("currently");
+        const description= document.getElementById("description");
+
+        function getData (data){
+
+            fetch(`https://api.hgbrasil.com/weather?key=SUA-CHAVE&city_name=${data}`).then(response =>response.json()).then(data=>{
+                console.log(data);
+                city.innerHTML = data.city;
+                date.innerHTML = data.date;
+                time.innerHTML = data.time;
+                currently.innerHTML = data.currently;
+                description.innerHTML = data.description;
+
+            }).catch(erro=>{
+                    console.log(erro);
+                    alert('inválido')
+              });;
+
+        }
+
+
+        btnbusca.addEventListener('click', (e)=>{
+            e.preventDefault();
+            data=txtbuscacidade.value;
+
+            if(data===''){
+                alert('Por favor, digite um valor...');
+            }else{
+                getData(data);
+                txtbuscacidade.value='';
+            }
+        })
+
+</script>
 </html>
