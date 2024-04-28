@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dados climáticos</title>
-    <link rel="stylesheet" href="/estilo01.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
@@ -40,6 +39,10 @@
         <div class="main">
             <a class="btn btn-primary" onClick="consultaIpUser()">Consultar</a>
         </div>
+        <br>
+        <div class="resultado">
+            <p id="resultado-data"></p>
+        </div>
         
     </div>
 </body>
@@ -48,29 +51,32 @@
     function consultaIpUser() {
         const url = "https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&user_ip=remote";
 
-        fetch(url, { //
+        fetch(url, { 
             method : "GET", // promise
-        }) //
-        .then( (resp) => resp.json() )
-        .then( (data) => {
+        }) 
+        .then( resp => resp.json())
+        .then( data => {
             //tratar o resultado "data" no formato json
-            console.log(data);
-            //mostrarResultadoIpUser(data);
+            mostrarResultadoIpUser(data);
         })
         .catch(error => console.error(error));
     }
 
-    /*function mostrarResultadoIpUser(data) {
-        conteudo = '<strong>Definições:</strong><br><br>';
-                    for (let index = 0; index < data.length; index++) {
-                        const definicao = data[index];
-                        conteudo += temp.xml + '<br><br>';
-                    }
-                }
-                const elem = document.getElementById('wordResponse');
-                elem.innerHTML = conteudo;
-            }
-    }*/
+    function mostrarResultadoIpUser(data) {
+        const { results } = data;
+
+        const html = `
+        <p>Cidade: ${results.city}</p>
+        <p>Temperatura: ${results.temp}°C</p>
+        <p>Condição: ${results.description}</p>
+        <p>Umidade: ${results.humidity}%</p>
+        `;
+
+        const resultadoData = document.getElementById('resultado-data');
+        resultadoData.innerHTML = html;        
+
+    }
+
     
 </script>
 </html>
