@@ -40,8 +40,8 @@
             <a class="btn btn-primary" onClick="consultaIpUser()">Consultar</a>
         </div>
         <br>
-        <div class="resultado">
-            <p id="resultado-data"></p>
+        <div id="resultado-data">
+            <p></p>
         </div>
         
     </div>
@@ -65,18 +65,18 @@
     function mostrarResultadoIpUser(data) {
         const { results } = data;
 
-        const html = `
-        <p>Cidade: ${results.city}</p>
-        <p>Temperatura: ${results.temp}°C</p>
-        <p>Condição: ${results.description}</p>
-        <p>Umidade: ${results.humidity}%</p>
-        `;
+        const html = `<div style="border: solid #726689 2px; border-radius: 10%; background-color: #eae4f5; width: fit-content; padding: 1.5%; ">
+            <p><b>Cidade: ${results.city}</b></p>
+            <p>Temperatura: ${results.temp}°C</p>
+            <p>Condição: ${results.description}</p>
+            <p>Umidade: ${results.humidity}%</p>
+            <p style="color: gray;"><i><small>Resultados para ${results.date} às ${results.time}</small></i></p>
+        </div>`;
 
         const resultadoData = document.getElementById('resultado-data');
         resultadoData.innerHTML = html;        
 
     }
-
     
 </script>
 </html>
