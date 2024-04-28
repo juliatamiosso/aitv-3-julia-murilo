@@ -29,7 +29,7 @@
         <br>
         <div class="row align-items-center">
             <div class="col-10">
-                <h1>Encontrar cidade por cidade e estado</h1>
+                <h1>Encontrar cidade por nome e estado</h1>
             </div>
         </div>
         <br>
@@ -38,8 +38,6 @@
             <form class="container-fluid d-flex justify-content-center">
                 <input class="form-control me-2" type="search" placeholder="Buscar cidade" aria-label="Search" id="txtbuscacidade">
                 <br>
-                <br>
-                <input class="form-control me-2" type="search" placeholder="Buscar estado" aria-label="Search" id="txtbuscaestado">
                 <br>
                 <br>
                 <a class="btn btn-outline-sucess" id="btnbusca">Consultar</a>
@@ -68,6 +66,7 @@
 
 <script>
         const txtbuscacidade = document.getElementById("txtbuscacidade");
+
         const btnbusca = document.getElementById("btnbusca");
         const city= document.getElementById("city");
         const date= document.getElementById("date");
@@ -77,7 +76,7 @@
 
         function getData (data){
 
-            fetch(`https://api.hgbrasil.com/weather?key=SUA-CHAVE&city_name=${data}`).then(response =>response.json()).then(data=>{
+            fetch(`https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&city_name=${data}`).then(response =>response.json()).then(data=>{
                 console.log(data);
                 city.innerHTML = data.city;
                 date.innerHTML = data.date;
@@ -98,10 +97,11 @@
             data=txtbuscacidade.value;
 
             if(data===''){
-                alert('Por favor, digite um valor...');
+                alert('Por favor, digite um nome válido...');
             }else{
                 getData(data);
                 txtbuscacidade.value='';
+
             }
         })
 
