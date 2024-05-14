@@ -97,7 +97,7 @@
               });;
         }
 
-        btnbusca.addEventListener('click', (e)=>{
+        btnbusca.addEventListener('click', function(e){
             e.preventDefault();
             data=txtbuscacidade.value;
 
@@ -111,6 +111,8 @@
                 txtbuscacidade.value='';
             }
         })
-
+        btnbusca.addEventListener('keypress', function(e){
+            
+        })
 </script>
 </html>
