@@ -65,19 +65,29 @@
             .then(data=>{
                 console.log(data);
                 const { results } = data;
+                
+                if(data.by === 'default') {
+                    console.log("Default")
+                alert('Por favor, digite um nome válido...');
+                txtbuscacidade.value='';
+                }
+                else {
 
-        const html = `<div style="border: solid #726689 2px; border-radius: 10%; background-color: #eae4f5; width: fit-content; padding: 1.5%; ">
-            <p><b>Cidade: ${results.city}</b></p>
-            <p>Temperatura: ${results.temp}°C</p>
-            <p>Condição: ${results.description}</p>
-            <p>Umidade: ${results.humidity}%</p>
-            <p>Nebulosidade: ${results.cloudiness}%</p>
-            <p>Velocidade do vento: ${results.wind_speedy}</p>
-            <p style="color: gray;"><i><small>Resultados para ${results.date} às ${results.time}</small></i></p>
-        </div>`;
+                const html = `<div style="border: solid #726689 2px; border-radius: 10%; background-color: #eae4f5; width: fit-content; padding: 1.5%; ">
+                    <p><b>Cidade: ${results.city}</b></p>
+                    <p>Temperatura: ${results.temp}°C</p>
+                    <p>Condição: ${results.description}</p>
+                    <p>Chuva: ${results.rain} mm</p>
+                    <p>Umidade: ${results.humidity}%</p>
+                    <p>Nebulosidade: ${results.cloudiness}%</p>
+                    <p>Velocidade do vento: ${results.wind_speedy}</p>
+                    <p style="color: gray;"><i><small>Resultados para ${results.date} às ${results.time}</small></i></p>
+                </div>`;
 
-        const resultadoData = document.getElementById('resultado-data');
-        resultadoData.innerHTML = html;        
+
+                const resultadoData = document.getElementById('resultado-data');
+                resultadoData.innerHTML = html;
+            }        
 
             }).catch(erro=>{
                     console.log(erro);
@@ -89,9 +99,11 @@
             e.preventDefault();
             data=txtbuscacidade.value;
 
-            if(data='default'){
+            if(data===''){
                 alert('Por favor, digite um nome válido...');
-                txtbuscacidade.value=''
+                txtbuscacidade.value='';
+                const resultadoData = document.getElementById('resultado-data');
+                resultadoData.innerHTML = '';
             }else{
                 getData(data);
                 txtbuscacidade.value='';
