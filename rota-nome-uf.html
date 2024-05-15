@@ -97,7 +97,7 @@
               });;
         }
 
-        btnbusca.addEventListener('click', function(e){
+         btnbusca.addEventListener('click', function(e){
             e.preventDefault();
             data=txtbuscacidade.value;
 
@@ -110,9 +110,23 @@
                 getData(data);
                 txtbuscacidade.value='';
             }
-        })
-        btnbusca.addEventListener('keypress', function(e){
-            
-        })
+            })
+            txtbuscacidade.addEventListener('keypress', function(e){
+            var key = e.which || e.keyCode;
+            if(key === 13){ // código da tecla Enter
+            e.preventDefault(); // Evita o comportamento padrão da tecla Enter
+            var data = txtbuscacidade.value;
+
+            if(data === ''){
+                alert('Por favor, digite um nome válido...');
+                txtbuscacidade.value = '';
+                const resultadoData = document.getElementById('resultado-data');
+                resultadoData.innerHTML = '';
+            } else {
+                getData(data);
+                txtbuscacidade.value = '';
+            }
+        }
+});
 </script>
 </html>
