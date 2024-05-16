@@ -39,14 +39,27 @@
         <div class="main">
             <form>
                 <div class="row">
-                  <div class="col-sm-1">
-                    <input type="text" class="form-control" placeholder="00">
-                    <p>foda</p>
+                  <div class="col-sm-3">
+                      <label>Latitude</label>
+                    <input type="text" class="form-control" placeholder="00.000" id="textlat">
                   </div>
-                  <div class="col-sm-1">
-                    <input type="text" class="form-control" placeholder="000">
+                  <div class="col-sm-3">
+                      <label>Longitude</label>
+                    <input type="text" class="form-control" placeholder="00.000" id="textlong">
+                  </div>
+                  <br><br>
+                  <div class="" id="aviso" style="border: 1px solid red; border-radius:10px; background-color: #fff7de; padding: 1%; padding-bottom: 0px; padding-top: 0.5%; width: 770px; margin-left: 13px;">
+                        <h5>Atenção</h5>
+                        <p>Para que a busca funcione, digite as coordenadas no seguinte formato:</p>
+                        <ul>
+                          <li><b>Correto: </b> 41.403, 2.174 <small><i>(com ponto final)</i></small></li>
+                          <li><b>Incorreto: </b> 41,403, 2,174 <small><i>(com vírgula)</i></small></li>
+                          <li>Se a coordenada for <b>negativa</b>, adicione um hífen (-) antes do número, sem espaços: -41.403, -2.174</li>
+                        </ul>
                   </div>
                 </div>
+                <br>
+                <a class="btn btn-primary" id="btnbusca">Consultar</a>
               </form>
         </div>
         <br>
