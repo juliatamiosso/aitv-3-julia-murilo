@@ -111,7 +111,8 @@
                 txtbuscacidade.value='';
             }
             })
-            txtbuscacidade.addEventListener('keypress', function(e){
+
+        txtbuscacidade.addEventListener('keypress', function(e){
             var key = e.which || e.keyCode;
             if(key === 13){ // código da tecla Enter
             e.preventDefault(); // Evita o comportamento padrão da tecla Enter
