@@ -63,7 +63,7 @@
               </form>
         </div>
         <br>
-        <div id="resultado-data">
+        <div id="resultado-latlong">
             <p></p>
         </div>
     </div>
@@ -76,83 +76,103 @@
 <script>
     const latitude = document.getElementById("textlat");
     const longitude = document.getElementById("textlong");
-
     const btnbusca = document.getElementById("btnbusca");
 
-    function getlatlong (lat, long){
-
-        fetch(`https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&lat=${lat}&lon=${long}`, { 
-        method : "GET", // promise
-    })
-        .then(response =>response.json())
-        .then(latlong=>{
-            console.log(lat);
-            const { results } = latlong
+    function getlatlong(lat, long) {
+        fetch(`https://api.hgbrasil.com/weather?format=json-cors&key=SUA-CHAVE&lat=${lat}&lon=${long}`)
+            .then(response => response.json())
+            .then(latlong => {
+                console.log(lat);
+                const { results } = latlong;
             
-            if(latlong.by === 'default') {
-                console.log("Default")
+                if (latlong.by === 'default') {
+                    console.log("Default")
+                    alert('Por favor, digite uma coordenada válida...');
+                    latitude.value = '';
+                    longitude.value = '';
+                    const resultadolatlong = document.getElementById('resultado-latlong');
+                    resultadolatlong.innerHTML = '';
+                } else {
+                    const html = `<div style="border: solid #726689 2px; border-radius: 10%; background-color: #eae4f5; width: fit-content; padding: 1.5%; ">
+                        <p><b>Cidade: ${results.city}</b></p>
+                        <p>Temperatura: ${results.temp}°C</p>
+                        <p>Condição: ${results.description}</p>
+                        <p>Chuva: ${results.rain} mm</p>
+                        <p>Umidade: ${results.humidity}%</p>
+                        <p>Nebulosidade: ${results.cloudiness}%</p>
+                        <p>Velocidade do vento: ${results.wind_speedy}</p>
+                        <p style="color: gray;"><i><small>Resultados para ${results.date} às ${results.time}</small></i></p>
+                    </div>`;
+
+                    const resultadolatlong = document.getElementById('resultado-latlong');
+                    resultadolatlong.innerHTML = html;
+                }        
+
+            })
+            .catch(erro => {
+                console.log(erro);
+                alert('Coordenada inválida');
+            });
+    }
+
+    btnbusca.addEventListener('click', function(e) {
+        e.preventDefault();
+        const lat = latitude.value;
+        const long = longitude.value;
+
+        if (lat === '' || long === '') {
             alert('Por favor, digite uma coordenada válida...');
-            textlat.value='';
-            textlong.value='';
+            latitude.value = '';
+            longitude.value = '';
             const resultadolatlong = document.getElementById('resultado-latlong');
             resultadolatlong.innerHTML = '';
-            }
-            else {
-
-            const html = `<div style="border: solid #726689 2px; border-radius: 10%; background-color: #eae4f5; width: fit-content; padding: 1.5%; ">
-                <p><b>Cidade: ${results.city}</b></p>
-                <p>Temperatura: ${results.temp}°C</p>
-                <p>Condição: ${results.description}</p>
-                <p>Chuva: ${results.rain} mm</p>
-                <p>Umidade: ${results.humidity}%</p>
-                <p>Nebulosidade: ${results.cloudiness}%</p>
-                <p>Velocidade do vento: ${results.wind_speedy}</p>
-                <p style="color: gray;"><i><small>Resultados para ${results.lat} às ${results.time}</small></i></p>
-            </div>`;
-
-
-            const resultadolat = document.getElementById('resultado-data');
-            resultadolat.innerHTML = html;
-        }        
-
-        }).catch(erro=>{
-                console.log(erro);
-                alert('inválido')
-          });;
-    }
-
-     btnbusca.addEventListener('click', function(e){
-        e.preventDefault();
-        lat=textlat.value;
-
-        if(lat===''){
-            alert('Por favor, digite um nome válido...');
-            txtbuscacidade.value='';
-            const resultadoData = document.getElementById('resultado-data');
-            resultadoData.innerHTML = '';
-        }else{
-            getData(data);
-            txtbuscacidade.value='';
-        }
-        })
-
-    txtbuscacidade.addEventListener('keypress', function(e){
-        var key = e.which || e.keyCode;
-        if(key === 13){ // código da tecla Enter
-        e.preventDefault(); // Evita o comportamento padrão da tecla Enter
-        var data = txtbuscacidade.value;
-
-        if(data === ''){
-            alert('Por favor, digite um nome válido...');
-            txtbuscacidade.value = '';
-            const resultadoData = document.getElementById('resultado-data');
-            resultadoData.innerHTML = '';
         } else {
-            getData(data);
-            txtbuscacidade.value = '';
+            getlatlong(lat, long);
+            latitude.value = '';
+            longitude.value = '';
         }
-    }
-});
+    });
+
+    latitude.addEventListener('keypress', function(e) {
+        const key = e.which || e.keyCode;
+        if (key === 13) { // Enter key code
+            e.preventDefault();
+            const lat = latitude.value;
+
+            if (lat === '') {
+                alert('Por favor, digite uma coordenada válida...');
+                latitude.value = '';
+                const resultadolatlong = document.getElementById('resultado-latlong');
+                resultadolatlong.innerHTML = '';
+            } else {
+                const long = longitude.value;
+                getlatlong(lat, long);
+                latitude.value = '';
+                longitude.value = '';
+            }
+        }
+    });
+
+    longitude.addEventListener('keypress', function(e) {
+        const key = e.which || e.keyCode;
+        if (key === 13) { // Enter key code
+            e.preventDefault();
+            const long = longitude.value;
+
+            if (long === '') {
+                alert('Por favor, digite uma coordenada válida...');
+                longitude.value = '';
+                const resultadolatlong = document.getElementById('resultado-latlong');
+                resultadolatlong.innerHTML = '';
+            } else {
+                const lat = latitude.value;
+                getlatlong(lat, long);
+                latitude.value = '';
+                longitude.value = '';
+            }
+        }
+    });
 </script>
+
 
 </html>
